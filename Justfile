@@ -39,6 +39,10 @@ clean:
     rm -f output.env
     rm -f output/
 
+# Build the ignition file
+butane:
+    #!/usr/bin/bash
+    butane --pretty --strict butane/autorebase.butane >> butane/autorebase.ign
 
 # This Justfile recipe builds a container image using Podman.
 #
