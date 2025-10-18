@@ -22,6 +22,10 @@ butane --pretty --strict autorebase.butane > autorebase.ign
 
 5. On first boot the VM should rebase to the latest image in the registry, and set up the SSH keys for a ready-to-use container host.
 
+# Upgrading via bootc
+
+TODO
+
 # Justfile Documentation
 
 The `Justfile` contains various commands and configurations for building and managing container images and virtual machine images using Podman and other utilities.
