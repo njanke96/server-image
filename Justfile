@@ -4,7 +4,6 @@ export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:l
 
 alias build-vm := build-qcow2
 alias rebuild-vm := rebuild-qcow2
-alias run-vm := run-vm-qcow2
 
 [private]
 default:
