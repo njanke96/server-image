@@ -1,3 +1,4 @@
 [[customizations.filesystem]]
 mountpoint = "/"
+rootfs = "ext4"
 minsize = "20 GiB"
