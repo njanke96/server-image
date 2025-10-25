@@ -42,7 +42,13 @@ clean:
 # Build the ignition file
 butane:
     #!/usr/bin/bash
-    butane --pretty --strict butane/autorebase.butane > butane/autorebase.ign
+    butane --pretty --strict < butane/autorebase.butane > butane/autorebase.ign
+
+butane-wsl:
+    #!/usr/bin/bash
+    podman.exe run --rm --interactive \
+              quay.io/coreos/butane:release \
+              --pretty --strict < butane/autorebase.butane > butane/autorebase.ign
 
 # This Justfile recipe builds a container image using Podman.
 #
@@ -71,6 +77,20 @@ build $target_image=image_name $tag=default_tag:
     fi
 
     podman build \
+        "${BUILD_ARGS[@]}" \
+        --pull=newer \
+        --tag "${target_image}:${tag}" \
+        .
+
+build-wsl $target_image=image_name $tag=default_tag:
+    #!/usr/bin/env bash
+
+    BUILD_ARGS=()
+    if [[ -z "$(git status -s)" ]]; then
+        BUILD_ARGS+=("--build-arg" "SHA_HEAD_SHORT=$(git rev-parse --short HEAD)")
+    fi
+
+    podman.exe build \
         "${BUILD_ARGS[@]}" \
         --pull=newer \
         --tag "${target_image}:${tag}" \

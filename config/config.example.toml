@@ -1,0 +1,4 @@
+[[customizations.user]]
+name = "nathan"
+key = "ssh-rsa AAA ... user@email.com"
+groups = ["wheel", "docker"]

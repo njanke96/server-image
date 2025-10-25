@@ -9,16 +9,55 @@ set -ouex pipefail
 # List of rpmfusion packages can be found here:
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
+alias dnf='dnf5'
 
-# Use a COPR Example:
 #
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+## clean install of docker-ce
+# 
+dnf -y remove cockpit-podman \
+  moby-engine \
+  containerd \
+  runc \
+  docker-cli \
+  docker-buildx \
+  docker-compose \
+  docker \
+  docker-client \
+  docker-client-latest \
+  docker-common \
+  docker-latest \
+  docker-latest-logrotate \
+  docker-logrotate \
+  docker-selinux \
+  docker-engine-selinux \
+  docker-engine
 
-#### Example for enabling a System Unit File
+curl --output-dir "/etc/yum.repos.d" --remote-name https://download.docker.com/linux/fedora/docker-ce.repo
+chmod 644 /etc/yum.repos.d/docker-ce.repo
 
-systemctl enable podman.socket
+dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+systemctl enable docker
+
+dnf install -y bootc
+
+# install go for lazydocker+dtop
+dnf install -y golang
+
+#
+## helix
+#
+dnf install -y helix
+
+# npm and cargo for LSP installation
+dnf install -y nodejs-npm cargo
+
+# bash langserver utilities
+dnf install -y ShellCheck shfmt
+
+# set helix as the default editor
+echo 'export EDITOR=hx' > /etc/profile.d/zz-default-editor.sh
+
+#
+## sudo NOPASSWD for %wheel
+#
+echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> '/etc/sudoers.d/wheel_nopasswd'
