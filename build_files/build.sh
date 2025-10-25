@@ -61,3 +61,15 @@ echo 'export EDITOR=hx' > /etc/profile.d/zz-default-editor.sh
 ## sudo NOPASSWD for %wheel
 #
 echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> '/etc/sudoers.d/wheel_nopasswd'
+
+#
+## Disable motd warning
+#
+systemctl disable coreos-container-signing-migration-motd.service
+
+#
+## Misc Packages
+#
+dnf install -y htop cronie
+
+systemctl enable crond.service
