@@ -73,3 +73,4 @@ systemctl disable coreos-container-signing-migration-motd.service
 dnf install -y htop cronie
 
 systemctl enable crond.service
+systemctl enable bootc-fetch-apply-updates.timer
