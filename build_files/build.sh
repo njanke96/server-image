@@ -74,3 +74,4 @@ dnf install -y htop cronie
 
 systemctl enable crond.service
 systemctl enable bootc-fetch-apply-updates.timer
+systemctl disable firewalld
