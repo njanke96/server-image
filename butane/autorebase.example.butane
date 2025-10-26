@@ -11,6 +11,9 @@ storage:
   directories:
     - path: /etc/ucore-autorebase
       mode: 0754
+  links:
+    - path: /etc/localtime
+      target: ../usr/share/zoneinfo/America/Vancouver
 systemd:
   units:
     - name: ucore-unsigned-autorebase.service
