@@ -1,7 +1,6 @@
 variant: fcos
 version: 1.6.0
 passwd:
-  # Don't set a password, sudo does not require a password
   users:
     - name: nathan
       ssh_authorized_keys:
@@ -48,5 +47,35 @@ systemd:
         ExecStart=/usr/bin/touch /etc/ucore-autorebase/signed
         ExecStart=/usr/bin/systemctl disable ucore-signed-autorebase.service
         ExecStart=/usr/bin/systemctl reboot
+        [Install]
+        WantedBy=multi-user.target
+    - name: var-mnt-backbox.mount
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Mount NFS Share /var/mnt/backbox
+        Documentation=man:systemd.mount(5) man:nfs(5)
+        After=network-online.target
+        Wants=network-online.target
+
+        [Mount]
+        What=vunraid.localdomain:/mnt/user/backbox
+        Where=/var/mnt/backbox
+        Type=nfs
+        Options=defaults,hard,timeo=50,retrans=5,relatime,rsize=1048576,wsize=1048576
+
+        [Install]
+        WantedBy=multi-user.target
+    - name: var-mnt-backbox.automount
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Automount NFS Share /mnt/user/backbox
+        Documentation=man:systemd.automount(5)
+
+        [Automount]
+        Where=/var/mnt/backbox
+        TimeoutIdleSec=300s
+
         [Install]
         WantedBy=multi-user.target
