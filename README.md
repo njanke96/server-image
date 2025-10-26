@@ -4,7 +4,16 @@ A repository for my VM container host, based on [ucore-minimal](https://github.c
 
 Adds:
 
-(TODO)
+- docker-ce (no podman)
+- lazydocker and dtop
+- dockge
+- bootc
+- helix (as the default editor)
+- various language servers for helix
+- htop
+- cron
+- disables firewalld
+- `NOPASSWD: ALL` for `wheel` users
 
 # Using (Proxmox)
 
