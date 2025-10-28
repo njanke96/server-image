@@ -71,6 +71,7 @@ systemctl disable coreos-container-signing-migration-motd.service
 ## Misc Packages
 #
 dnf install -y htop cronie
+dnf install -y nmap-ncat
 
 systemctl enable crond.service
 systemctl enable bootc-fetch-apply-updates.timer

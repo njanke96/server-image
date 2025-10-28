@@ -3,6 +3,7 @@ version: 1.6.0
 passwd:
   users:
     - name: nathan
+      password_hash: SOME_PASSWORD_HASH
       ssh_authorized_keys:
         - YOUR_SSH_PUB_KEY_HERE
       groups:
