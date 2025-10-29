@@ -1,22 +1,41 @@
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /
+COPY systemd /systemd
 
 # Base Image
 FROM ghcr.io/ublue-os/ucore-minimal:stable
 
-### MODIFICATIONS
-## make modifications desired in your image and install packages by modifying the build.sh script
-## the following RUN directive does all the things required to run "build.sh" as recommended.
+# Build scripts
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    bash /ctx/core.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    bash /ctx/build.sh
+    bash /ctx/helix.sh
 
-# The post_boot.sh script
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    bash /ctx/go_tools.sh
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    bash /ctx/misc.sh
+
+# The install_dockge.sh script
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx cp /ctx/install_dockge.sh /etc/install_dockge.sh
+
+# systemd overrides
+COPY --from=ctx /systemd/. /etc/systemd/system/
 
 ### LINTING
 ## Verify final image and contents are correct.
