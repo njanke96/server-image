@@ -10,6 +10,8 @@ on:
     paths-ignore:
       - '**/README.md'
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0"
 
 env:
   IMAGE_DESC: "Nathan's Server Image"
