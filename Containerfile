@@ -16,7 +16,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     bash /ctx/build.sh
 
 # The post_boot.sh script
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx cp /ctx/post_boot.sh /etc/post_boot.sh
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx cp /ctx/install_dockge.sh /etc/install_dockge.sh
 
 ### LINTING
 ## Verify final image and contents are correct.
