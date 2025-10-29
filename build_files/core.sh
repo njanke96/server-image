@@ -38,4 +38,4 @@ chmod 644 /etc/yum.repos.d/docker-ce.repo
 dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 systemctl enable docker
 
-dnf install -y bootc htop cronie nmap-ncat
+dnf install -y bootc htop cronie nmap-ncat man-db

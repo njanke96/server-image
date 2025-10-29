@@ -2,6 +2,8 @@
 
 set -ouex pipefail
 
+alias dnf='dnf5'
+
 #
 ## lazydocker and dtop
 # 
