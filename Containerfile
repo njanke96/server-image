@@ -1,6 +1,7 @@
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /
+COPY etc_scripts /etc_scripts
 COPY systemd /systemd
 
 # Base Image
@@ -38,7 +39,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     bash /ctx/misc.sh
 
 # The install_dockge.sh script
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx cp /ctx/install_dockge.sh /etc/install_dockge.sh
+COPY --from=ctx /etc_scripts/. /etc/
 
 # systemd overrides
 COPY --from=ctx /systemd/. /etc/systemd/system/
