@@ -33,7 +33,8 @@ butane --pretty --strict autorebase.butane > autorebase.ign
 
 # Upgrading via bootc
 
-TODO
+Immediately: `bootc upgrade --apply` (will reboot)
+On a schedule: **bootc-fetch-apply-updates.timer** is enabled by default to update once a month
 
 # Justfile Documentation
 
