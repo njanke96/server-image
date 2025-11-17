@@ -12,6 +12,11 @@ storage:
   directories:
     - path: /etc/ucore-autorebase
       mode: 0754
+    - path: /var/mnt/backbox
+      user:
+        name: nathan
+      group:
+        name: nathan
   links:
     - path: /etc/localtime
       target: ../usr/share/zoneinfo/America/Vancouver
@@ -57,16 +62,16 @@ systemd:
       enabled: true
       contents: |
         [Unit]
-        Description=Mount NFS Share /var/mnt/backbox
-        Documentation=man:systemd.mount(5) man:nfs(5)
+        Description=Mount CIFS Share /var/mnt/backbox
+        Documentation=man:systemd.automount(5)
         After=network-online.target
         Wants=network-online.target
 
         [Mount]
-        What=vunraid.localdomain:/mnt/user/backbox
+        What=//vunraid.localdomain/backbox
         Where=/var/mnt/backbox
-        Type=nfs
-        Options=defaults,hard,timeo=50,retrans=5,relatime,rsize=1048576,wsize=1048576
+        Type=cifs
+        Options=username=USER_NAME_HERE,password=YOUR_PASSWORD_HERE,iocharset=utf8,uid=1001,gid=1001,dir_mode=0755,file_mode=0644,vers=3.0,_netdev,nofail
 
         [Install]
         WantedBy=multi-user.target
@@ -74,7 +79,7 @@ systemd:
       enabled: true
       contents: |
         [Unit]
-        Description=Automount NFS Share /mnt/user/backbox
+        Description=Automount CIFS Share /mnt/user/backbox
         Documentation=man:systemd.automount(5)
 
         [Automount]
