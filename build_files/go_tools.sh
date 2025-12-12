@@ -5,7 +5,7 @@ set -ouex pipefail
 alias dnf='dnf5'
 
 #
-## lazydocker and dtop
+## lazydocker
 # 
 dnf install -y golang
 
@@ -18,10 +18,9 @@ export GOPATH="/usr/image-local/go"
 mkdir -p "$GOPATH/bin"
 mkdir -p "$GOPATH/pkg"
 
-# install lazydocker and dtop
-# these are the versions supported by the packaged golang
-go install github.com/jesseduffield/lazydocker@v0.24.1
-go install github.com/amir20/dtop@v0.0.37
+# install lazydocker
+# must use the version compatible with the packaged go
+go install github.com/jesseduffield/lazydocker@v0.24.2
 
 # set a profile.d for this path
 echo 'export PATH="$PATH:'"$GOPATH/bin"\" > /etc/profile.d/zz-go-binaries.sh
